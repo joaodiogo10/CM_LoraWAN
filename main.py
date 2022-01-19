@@ -25,7 +25,7 @@ print('Joined ')
 # create a LoRa socket
 s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
 # set the LoRaWAN data rate
-s.setsockopt(socket.SOL_LORA, socket.SO_DR, 3)
+s.setsockopt(socket.SOL_LORA, socket.SO_DR, 0)
 gpio = Pin('G23', mode = Pin.OUT)
 ledOn = False
 

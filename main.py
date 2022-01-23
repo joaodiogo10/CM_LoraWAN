@@ -25,7 +25,7 @@ print('Joined ')
 # create a LoRa socket
 s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
 # set the LoRaWAN data rate
-s.setsockopt(socket.SOL_LORA, socket.SO_DR, 0)
+s.setsockopt(socket.SOL_LORA, socket.SO_DR, 2)
 gpio = Pin('G23', mode = Pin.OUT)
 ledOn = False
 
@@ -65,7 +65,7 @@ while True :
         # get any data received
 
         timeRX = 0
-        for i in range(10) :
+        for i in range(1,20) :
             data = check_downlink() 
             if data != None:
                 print("Time reception: " + str(timeRX))
@@ -73,15 +73,17 @@ while True :
                 ledOn = True
             elif (data == b'\x02'):
                 ledOn = False
-
+            
+            # Change the gpio value
+            if(ledOn):
+                gpio.value(1)
+            else:
+                gpio.value(0)
+            
             time.sleep(1)
             timeRX = timeRX + 1
  
-        # Change the gpio value
-        if(ledOn):
-            gpio.value(1)
-        else:
-            gpio.value(0)
+
 
         
         

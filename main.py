@@ -9,9 +9,9 @@ import machine
 # Initialise LoRa in LORAWAN mode .
 lora = LoRa(mode=LoRa.LORAWAN)
 # create an ABP authentication params
-dev_addr = struct.unpack(">l", ubinascii.unhexlify('260BF5EC'))[0]
-nwk_swkey = ubinascii.unhexlify('820C96623ADB35676238F91BA66F0490')
-app_swkey = ubinascii.unhexlify('3A0C703182B116A16077CAFC4CAF6A3C')
+dev_addr = struct.unpack(">l", ubinascii.unhexlify('260BDD0D'))[0]
+nwk_swkey = ubinascii.unhexlify('C932E44328ABF60E86103B4A8DD72F07')
+app_swkey = ubinascii.unhexlify('53B74EC05B1702948391D4A57E7FB64B')
 
 # join a network using ABP (Activation By Personalization)
 lora.join(activation=LoRa.ABP, auth=(dev_addr, nwk_swkey, app_swkey))
@@ -25,7 +25,7 @@ print('Joined ')
 # create a LoRa socket
 s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
 # set the LoRaWAN data rate
-s.setsockopt(socket.SOL_LORA, socket.SO_DR, 2)
+s.setsockopt(socket.SOL_LORA, socket.SO_DR, 5)
 gpio = Pin('G23', mode = Pin.OUT)
 ledOn = False
 
@@ -65,7 +65,7 @@ while True :
         # get any data received
 
         timeRX = 0
-        for i in range(1,20) :
+        for i in range(1,10) :
             data = check_downlink() 
             if data != None:
                 print("Time reception: " + str(timeRX))
